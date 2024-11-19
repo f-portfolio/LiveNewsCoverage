@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'attachments',
-    #'blog',
+    'blog',
     #'projects',
     #'Webpagestructure', 
 
