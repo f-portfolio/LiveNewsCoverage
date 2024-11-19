@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-
+from .paginations import *
 
 class ImageModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsGetOnly|IsAdminUser]
@@ -15,7 +15,8 @@ class ImageModelViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['name',]
-    
+    pagination_class = CustomPageNumberPagination
+
 
 class VideoModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsGetOnly|IsAdminUser]
@@ -23,7 +24,8 @@ class VideoModelViewSet(viewsets.ModelViewSet):
     queryset = Video.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['name',]
-    
+    pagination_class = CustomPageNumberPagination
+
     
 class URLModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsGetOnly|IsAdminUser]
@@ -31,7 +33,8 @@ class URLModelViewSet(viewsets.ModelViewSet):
     queryset = URL.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['name',]
-    
+    pagination_class = CustomPageNumberPagination
+
 
 class TagModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsGetOnly|IsAdminUser]
@@ -41,6 +44,7 @@ class TagModelViewSet(viewsets.ModelViewSet):
     filterset_fields = ['confirm',]
     search_fields = ['name',]
     ordering_fields = ['name']
+    pagination_class = CustomPageNumberPagination
 
 
 class TypeOfNewsModelViewSet(viewsets.ModelViewSet):
@@ -49,7 +53,8 @@ class TypeOfNewsModelViewSet(viewsets.ModelViewSet):
     queryset = TypeOfNews.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['name',]
-    
+    pagination_class = CustomPageNumberPagination
+
 
 class MetaKwordModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsGetOnly|IsAdminUser]
@@ -57,7 +62,8 @@ class MetaKwordModelViewSet(viewsets.ModelViewSet):
     queryset = MetaKword.objects.all()
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['name',]
-    
+    pagination_class = CustomPageNumberPagination
+
 
 
 

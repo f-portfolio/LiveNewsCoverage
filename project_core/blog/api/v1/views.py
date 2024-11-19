@@ -1,34 +1,24 @@
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from django.db.models import Q
 from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from rest_framework import status, mixins, viewsets, generics
-from rest_framework.decorators import action
+from rest_framework import viewsets, generics
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-from django.contrib.auth.decorators import permission_required
 from .serializers import FolderNameSerializer, PostSerializer, TagSerializer, PostSerializer_, PostsFilterByDateSerializer, CrawlSearchWordSerializer
 from blog.models import Post, FolderName, CrawlSearchWord
 from .permissions import IsOwnerOrReadOnly, IsGetOnly#,  IsSupervisor,
-import re 
 from .paginations import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import viewsets
-import psycopg2
-
 from selenium import webdriver
 from ...models import Post
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from datetime import datetime
-
-from jdatetime import datetime
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 from .crawl_web import CrawlViewset
 from .crawl_web import *
 from .crawl_web import connection_to_database
@@ -52,8 +42,7 @@ class PostModelViewSet(viewsets.ModelViewSet):
                      'title', 'h1', 'tags__name', 'content', 'type_of_news__name', 'media_description',]
     
     ordering_fields = ['-published_date']
-    pagination_class = StandardPagination
-    ##pagination_class = DefaultPagination
+    pagination_class = CustomPageNumberPagination
     
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -78,7 +67,7 @@ class FolderNameModelViewSet(viewsets.ModelViewSet):
     filterset_fields = ['name', 'tags', 'trash',]
     search_fields = ['name', 'h1', 'header', 'tags__name']
     ordering = ['-created_date', ]
-    pagination_class = StandardPagination
+    pagination_class = CustomPageNumberPagination
     
 
 class FolderNameDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -103,7 +92,7 @@ class PostListByFolderName(generics.ListAPIView):
                         'type_of_news', 'source_website',]
     search_fields = ['folder_name__name', 'author__user__username', 'publisher__user__username', 
                      'title', 'h1', 'tags__name', 'content', 'type_of_news__name', 'media_description',]
-    pagination_class = StandardPagination
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         folder_name_id = self.kwargs['folder_name_id']
